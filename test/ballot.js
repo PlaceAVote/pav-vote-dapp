@@ -19,7 +19,7 @@ contract('Ballot', function(accounts) {
     }).then(done);
   });
 
-  it("Given a bill, When the chairperson gives a person the right to vote, Then verify that user is one of the voters", function(done) {
+  it("Given a Ballot, When the chairperson gives a person the right to vote, Then verify that user is one of the voters", function(done) {
     var ballot = Ballot.deployed();
 
     ballot.giveRightToVote(accounts[1], {from: accounts[0]});
@@ -30,19 +30,23 @@ contract('Ballot', function(accounts) {
     done();
   });
 
-  it("Given a bill with a registered voter, When that user votes, Then process vote", function(done) {
+  it("Given a Ballot with a registered voter, When that user votes, Then process vote", function(done) {
     var ballot = Ballot.deployed();
 
+    //verify yes vote
     ballot.giveRightToVote(accounts[1], {from: accounts[0]});
-
     ballot.vote(true, {from: accounts[1]});
 
-    ballot.yesCount.call(accounts[1]).then(function(count) {
+    ballot.yesCount.call().then(function(count) {
       assert.equal(count, 1, "Ballot has an incorrect number of yes votes");
     });
 
-    ballot.noCount.call(accounts[1]).then(function(count) {
-      assert.equal(count, 0, "Ballot has an incorrect number of no votes");
+    //verify no vote
+    ballot.giveRightToVote(accounts[2], {from: accounts[0]});
+    ballot.vote(false, {from: accounts[2]});
+
+    ballot.noCount.call().then(function(count) {
+      assert.equal(count, 1, "Ballot has an incorrect number of no votes");
     });
 
     done();

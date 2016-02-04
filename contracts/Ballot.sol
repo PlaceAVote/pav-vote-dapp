@@ -36,13 +36,13 @@ contract Ballot {
   }
 
   function giveRightToVote(address voter){
-      if (msg.sender != chairperson || voters[voter].voted) return;
+      if (msg.sender != chairperson || voters[voter].voted) throw;
       voters[voter].weight = 1;
   }
 
   function vote(bool vote) {
     Voter sender = voters[msg.sender];
-    if(sender.voted) return;
+    if(sender.voted) throw;
     sender.voted = true;
     sender.vote = vote;
     if(vote) {

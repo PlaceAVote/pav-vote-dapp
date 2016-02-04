@@ -29,11 +29,11 @@ var factory = function factory(Pudding) {
   MetaCoin.abi = [{ "constant": false, "inputs": [{ "name": "receiver", "type": "address" }, { "name": "amount", "type": "uint256" }], "name": "sendCoin", "outputs": [{ "name": "sufficient", "type": "bool" }], "type": "function" }, { "constant": false, "inputs": [{ "name": "addr", "type": "address" }], "name": "getBalance", "outputs": [{ "name": "", "type": "uint256" }], "type": "function" }, { "inputs": [{ "name": "val", "type": "uint256" }], "type": "constructor" }];
   MetaCoin.binary = "606060405260405160208060de833950608060405251600160a060020a0332166000908152602081905260409020612710905550609f80603f6000396000f3606060405260e060020a600035046390b98a1181146024578063f8b2cb4f146050575b005b606c60043560243533600160a060020a0316600090815260208190526040812054829010156076576099565b600160a060020a03600435166000908152602081905260409020545b6060908152602090f35b604080822080548490039055600160a060020a0384168252902080548201905560015b9291505056";
 
-  if ("0xdd17ed990228db16578525f003d5fa2584af6330" != "") {
-    MetaCoin.address = "0xdd17ed990228db16578525f003d5fa2584af6330";
+  if ("0xea0e9145016a148af04c4769e5bef07481907701" != "") {
+    MetaCoin.address = "0xea0e9145016a148af04c4769e5bef07481907701";
 
     // Backward compatibility; Deprecated.
-    MetaCoin.deployed_address = "0xdd17ed990228db16578525f003d5fa2584af6330";
+    MetaCoin.deployed_address = "0xea0e9145016a148af04c4769e5bef07481907701";
   }
 
   MetaCoin.generated_with = "1.0.3";
