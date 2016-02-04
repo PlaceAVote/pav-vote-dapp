@@ -24,6 +24,10 @@ contract Ballot {
   // stores a `Bill` struct for associated Bill
   Bill public bill;
 
+  //store current vote count;
+  uint public yesCount;
+  uint public noCount;
+
   function Ballot(uint number, uint congress, bytes32 billType) {
     bill.number = number;
     bill.congress = congress;
@@ -34,7 +38,19 @@ contract Ballot {
   function giveRightToVote(address voter){
       if (msg.sender != chairperson || voters[voter].voted) return;
       voters[voter].weight = 1;
+  }
+
+  function vote(bool vote) {
+    Voter sender = voters[msg.sender];
+    if(sender.voted) return;
+    sender.voted = true;
+    sender.vote = vote;
+    if(vote) {
+      yesCount += sender.weight;
+    } else {
+      noCount += sender.weight;
     }
+  }
 
   function getBillNumber() returns (uint) {
     return bill.number;

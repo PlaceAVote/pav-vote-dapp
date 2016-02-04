@@ -16,20 +16,35 @@ contract('Ballot', function(accounts) {
         ballot.getCongress.call().then(function(congress) {
           assert.equal(congress, billCongress, "Bill Congress numbers do not match");
         });
-        ballot.getBillType.call().then(function(type) {
-          //assert.equal(type, web3.toHex(billType), "Bill Types do not match");
-        });
     }).then(done);
   });
 
-  it("Given a bill, When chairperson gives a person rights to vote, Then verify user is one of the voters", function(done) {
+  it("Given a bill, When the chairperson gives a person the right to vote, Then verify that user is one of the voters", function(done) {
     var ballot = Ballot.deployed();
 
     ballot.giveRightToVote(accounts[1], {from: accounts[0]});
 
     ballot.voters.call(accounts[1]).then(function(voter) {
-      assert.isNotNull(voter, accounts[1], "Voter has not been given permission to vote.");
+      assert.equal(voter[0], 1, "Voter has not been given permission to vote.");
     });
+    done();
+  });
+
+  it("Given a bill with a registered voter, When that user votes, Then process vote", function(done) {
+    var ballot = Ballot.deployed();
+
+    ballot.giveRightToVote(accounts[1], {from: accounts[0]});
+
+    ballot.vote(true, {from: accounts[1]});
+
+    ballot.yesCount.call(accounts[1]).then(function(count) {
+      assert.equal(count, 1, "Ballot has an incorrect number of yes votes");
+    });
+
+    ballot.noCount.call(accounts[1]).then(function(count) {
+      assert.equal(count, 0, "Ballot has an incorrect number of no votes");
+    });
+
     done();
   });
 });
